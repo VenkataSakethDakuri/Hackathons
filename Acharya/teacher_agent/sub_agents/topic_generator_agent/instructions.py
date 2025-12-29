@@ -32,19 +32,19 @@ Analyze the topic "{topic}" and generate a comprehensive list of subtopics that:
 - Do NOT create subtopics that are too narrow (should support 5-7 minutes of content)
 
 ---
-### OUTPUT FORMAT
+### OUTPUT FORMAT   
 You must provide:
-1. A **numbered list** of subtopics (format: "1. Subtopic Name")
+1. A **list** of subtopics (format: "Subtopic Name, Another Subtopic, Third Subtopic")
 2. The **total count** of subtopics generated
 
 **Example Output Structure:**
-1. Fundamental Concepts and Definitions
-2. Historical Development and Key Milestones
-3. Core Principles and Mechanisms
-4. Practical Applications and Use Cases
-5. Advanced Techniques and Methodologies
-6. Current Challenges and Limitations
-7. Future Trends and Emerging Research
+[Fundamental Concepts and Definitions,
+Historical Development and Key Milestones,
+Core Principles and Mechanisms,
+Practical Applications and Use Cases,
+Advanced Techniques and Methodologies,
+Current Challenges and Limitations,
+Future Trends and Emerging Research]
 
 Count: 7
 

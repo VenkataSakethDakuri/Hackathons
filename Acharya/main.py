@@ -67,7 +67,7 @@ async def main_async():
             )
 
             SESSION_ID = new_session.id
-            # print(f"Created new session: {SESSION_ID}")
+            print(f"Created new session: {SESSION_ID}")
 
         runner = Runner(
             agent=teacher_agent,
@@ -97,6 +97,8 @@ async def main_async():
 
         print("Session completed. Cleaning up...")
         
+        print(session.state["subtopics"]["subtopics"])
+
         await session_service.delete_session(
             app_name=APP_NAME,
             user_id=USER_ID,
