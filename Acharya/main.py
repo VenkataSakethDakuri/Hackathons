@@ -6,9 +6,8 @@ from dotenv import load_dotenv
 from google.adk.sessions import DatabaseSessionService
 from google.adk.runners import Runner
 from google.genai import types
-from teacher_agent.agent import teacher_agent
-# from teacher_agent.sub_agents.web_page_content_function.function import web_page_content_function
-# from teacher_agent.sub_agents.factory_agent.agent import factory_agent
+from teacher_agent.sub_agents.web_page_content_function.function import web_page_content_function
+from teacher_agent.sub_agents.factory_agent.agent import factory_agent
 from teacher_agent.sub_agents.topic_generator_agent.agent import topic_generator_agent
 
 # Load environment variables
@@ -97,6 +96,15 @@ async def main_async():
         
         if final_response:
             print(f"\n{text_content}\n")
+
+        # Refresh the session to get the latest state updated by the agent
+        # Normally the session is stored in the database, but does not change the local variable. 
+        # So we need to refetch the session to get the latest state updated by the agent.
+        session = await session_service.get_session(
+            app_name=APP_NAME,
+            user_id=USER_ID,
+            session_id=SESSION_ID
+        )
         
         sub_agents = []
 
@@ -125,15 +133,6 @@ async def main_async():
             print(f"\n{text_content}\n")    
 
         print("Session completed. Cleaning up...")
-
-        # Refresh the session to get the latest state updated by the agent
-        # Normally the session is stored in the database, but does not change the local variable. 
-        # So we need to refetch the session to get the latest state updated by the agent.
-        session = await session_service.get_session(
-            app_name=APP_NAME,
-            user_id=USER_ID,
-            session_id=SESSION_ID
-        )
         
         print(session.state["subtopics"]["subtopics"])
 
