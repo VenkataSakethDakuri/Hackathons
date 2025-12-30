@@ -1,1 +1,1 @@
-from .agent import flashcard_agent
+from .agent import flashcard_agent_function

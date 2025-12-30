@@ -1,14 +1,20 @@
 from google.adk.agents import SequentialAgent
-from ..web_page_agent import web_page_agent
+from ..web_page_agent import web_page_agent_function
 # from ..quiz_agent import quiz_agent
 # from ..flashcard_agent import flashcard_agent
-from ..flashcard_quiz_podcast_agent import flashcard_quiz_podcast_agent
+from ..flashcard_quiz_podcast_agent.agent import flashcard_quiz_podcast_agent_function
 
 
+count = 0
 
 
+def web_page_content_function(subtopic: str) -> SequentialAgent: 
 
-def web_page_content_function(subtopic: str) -> ParallelAgent: 
+    global count
+    count += 1
+
+    web_page_agent = web_page_agent_function()
+    flashcard_quiz_podcast_agent = flashcard_quiz_podcast_agent_function()
 
     web_page_agent.instruction = """
     You are an expert technical writer and educator. Your task is to write high-quality web page content for the subtopic: "{subtopic}".
@@ -55,7 +61,7 @@ def web_page_content_function(subtopic: str) -> ParallelAgent:
 
 
     web_page_content_agent = SequentialAgent(
-        name = f"web_page_content_agent_{subtopic}",
+        name = f"web_page_content_function_agent_{count}",
         description = "Generates web page content for a given topic",
         sub_agents=[
             web_page_agent,
