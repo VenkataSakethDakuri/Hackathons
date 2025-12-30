@@ -60,13 +60,13 @@ async def main_async():
         else:
             # Create a new session with initial state
             # Session = Events + State
-            new_session = await session_service.create_session(
+            session = await session_service.create_session(
                 app_name=APP_NAME,
                 user_id=USER_ID,
                 state=initial_state,
             )
 
-            SESSION_ID = new_session.id
+            SESSION_ID = session.id
             print(f"Created new session: {SESSION_ID}")
 
         runner = Runner(
@@ -111,10 +111,10 @@ async def main_async():
 
     except KeyboardInterrupt:
         print("\n\nProcess interrupted by user.")
-        sys.exit(0)
+        os._exit(0)
     except Exception as e:
         print(f"\n\nError occurred: {type(e).__name__}: {str(e)}")
-        sys.exit(1)
+        os._exit(1)
 
 
 
@@ -123,7 +123,7 @@ if __name__ == "__main__":
         asyncio.run(main_async())
     except KeyboardInterrupt:
         print("\n\nForce exit.")
-        sys.exit(0)
+        os._exit(0)
     
     print("Exiting process...")
     os._exit(0)
