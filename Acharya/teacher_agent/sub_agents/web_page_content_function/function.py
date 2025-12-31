@@ -58,7 +58,35 @@ def web_page_content_function(subtopic: str) -> SequentialAgent:
            **Correct Answer:** [Option Letter] - [Brief Explanation]
     """
 
+    flashcard_quiz_podcast_agent.sub_agents[2].instruction = f"""
+    You are a world-class podcast scriptwriter. Your task is to write a highly engaging, conversational script for a podcast episode about: "{subtopic}".
 
+    **Source Material:**
+    Base your script *strictly* on the following content:
+    {{webpage_content}}
+
+    **The Hosts:**
+    1.  **Alice (The Host):** Energetic, curious, and represents the audience. She asks the "dumb questions" and drives the conversation forward.
+    2.  **Bob (The Expert):** Knowledgeable but relatable. He explains complex ideas using simple analogies and metaphors. He is never boring or overly academic.
+
+    **Critical Constraints (Optimized for Text-to-Speech):**
+    1.  **Length:** The script MUST be between **800 to 1000 words**. This is strict to ensure the audio duration is 5-6 minutes.
+    2.  **Format:** Write ONLY the spoken dialogue. Do NOT include stage directions like "(laughs)", "[Intro Music]", or "*sighs*" as the TTS engine will read these aloud.
+    3.  **Tone:** Casual, fun, and fast-paced. Use contractions ("can't" instead of "cannot"), interjections ("Wow", "Right", "Exactly"), and rhetorical questions.
+    4.  **Structure:**
+        * **The Hook:** Start immediately with a surprising fact or question about the topic.
+        * **The Deep Dive:** Alice and Bob unpack the source content. Alice challenges Bob to explain things simpler.
+        * **The Outro:** A quick 1-sentence wrap-up and sign-off.
+
+    **Output Format:**
+    Return the script exactly in this pattern (and nothing else):
+
+    Alice: [Dialogue]
+    Bob: [Dialogue]
+    Alice: [Dialogue]
+    Bob: [Dialogue]
+    ...
+    """
 
     web_page_content_agent = SequentialAgent(
         name = f"web_page_content_function_agent_{count}",

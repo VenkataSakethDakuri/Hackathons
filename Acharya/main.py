@@ -165,8 +165,8 @@ async def main_async():
         print(50*"-")
         print(session.state["webpage_content"])
         print(50*"-")
-
-        
+        print(session.state["podcast_content"])
+        print(50*"-")
 
         await session_service.delete_session(
             app_name=APP_NAME,
