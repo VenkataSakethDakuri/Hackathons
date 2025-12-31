@@ -151,8 +151,22 @@ async def main_async():
             print(f"\n{text_content}\n")    
 
         print("Session completed. Cleaning up...")
+
+        session = await session_service.get_session(
+            app_name=APP_NAME,
+            user_id=USER_ID,
+            session_id=SESSION_ID
+        )
         
-        print(session.state["subtopics"]["subtopics"])
+        print(50*"-")
+        print(session.state["flashcards"])
+        print(50*"-")
+        print(session.state["quiz"])
+        print(50*"-")
+        print(session.state["webpage_content"])
+        print(50*"-")
+
+        
 
         await session_service.delete_session(
             app_name=APP_NAME,
