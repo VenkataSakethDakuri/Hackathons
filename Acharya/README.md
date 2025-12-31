@@ -1,6 +1,6 @@
 # Acharya - AI Teacher Agent
 
-Acharya is an advanced, multi-agent AI system designed to act as a comprehensive educational content generator. By leveraging the Google Agent Development Kit (ADK) and Gemini models, Acharya takes a single user-provided topic and autonomously creates a complete learning module consisting of structured web pages, flashcards, quizzes, and podcast scripts.
+Acharya is an advanced, multi-agent AI system designed to act as a comprehensive educational content generator. By leveraging the Google Agent Development Kit (ADK) and Gemini models, Acharya takes a single user-provided topic and autonomously creates a complete learning module consisting of structured web pages, flashcards, quizzes, and podcasts.
 
 ## 🚀 Features
 
@@ -9,7 +9,7 @@ Acharya is an advanced, multi-agent AI system designed to act as a comprehensive
     -   **Web Page Content**: Educational articles with clear structure and depth.
     -   **Flashcards**: Key concepts extracted for retention.
     -   **Quizzes**: Multiple-choice questions to test understanding.
-    -   **Podcasts**: Engaging, conversational scripts between two AI hosts (Alice & Bob).
+    -   **Podcasts**: Engaging conversations between two AI hosts (Alice & Bob).
 -   **Parallel Execution**: Utilizes parallel agents to generate content for multiple subtopics simultaneously, significantly reducing wait times.
 
 ## 📂 Folder Structure
@@ -23,7 +23,7 @@ teacher_agent/
     ├── factory_agent/         # Orchestrates parallel execution for all subtopics
     ├── flashcard_agent/       # Generates flashcards from web page content
     ├── flashcard_quiz_podcast_agent/ # Parallel agent wrapper for auxiliary content
-    ├── podcast_agent/         # Generates conversational podcast scripts
+    ├── podcast_agent/         # Generates conversational educationalpodcasts
     ├── quiz_agent/            # Generates multiple-choice quizzes
     ├── topic_generator_agent/ # breaks the main topic into subtopics
     ├── web_page_agent/        # Writes the core educational text
@@ -50,7 +50,7 @@ For each subtopic, a specific sequence of agents is executed:
 2.  **Parallel Content Generation**: Once the text is ready, three agents run in parallel, using the text as source material:
     -   **Flashcard Agent**: Extracts facts.
     -   **Quiz Agent**: Creates questions.
-    -   **Podcast Agent**: Scripts a discussion.
+    -   **Podcast Agent**: Scripts a discussion and converts it into a podcast.
 
 ### Workflow Diagram
 
@@ -100,7 +100,7 @@ flowchart TD
 | **Web Page Agent** | `LlmAgent` | The primary content creator. It writes the detailed article. |
 | **Flashcard Agent** | `LlmAgent` | Scans the article to create Q&A pairs for memorization. |
 | **Quiz Agent** | `LlmAgent` | Creates distinct multiple-choice questions to test comprehension. |
-| **Podcast Agent** | `LlmAgent` | Converts the article into a fun, 2-person dialogue script optimized for TTS. |
+| **Podcast Agent** | `LlmAgent` | Converts the article into a fun, 2-person dialogue script and then converts it into a podcast. |
 
 ## ⚙️ Key Implementation Details
 
