@@ -76,6 +76,7 @@ async def main_async():
             app_name=APP_NAME,
             session_service=session_service,
         )
+        print("DEBUG: runner for topic_generator_agent initialized.")
         
         # Send a message to trigger the agent workflow
         content = types.Content(
@@ -96,6 +97,8 @@ async def main_async():
         
         if final_response:
             print(f"\n{text_content}\n")
+        
+        await asyncio.sleep(60)
 
         # Refresh the session to get the latest state updated by the agent
         # Normally the session is stored in the database, but does not change the local variable. 
@@ -108,8 +111,20 @@ async def main_async():
         
         sub_agents = []
 
-        for subtopic in session.state["subtopics"]["subtopics"]:
-            sub_agents.append(web_page_content_function(subtopic))
+        if "subtopics" not in session.state or "subtopics" not in session.state["subtopics"]:
+            print(f"DEBUG ERROR: session.state structure unexpected: {session.state.keys()}")
+
+        subtopics_list = session.state["subtopics"]["subtopics"]
+        print(f"DEBUG: Found {len(subtopics_list)} subtopics. Creating sub-agents...")
+
+        # for i, subtopic in enumerate(subtopics_list):
+        #     print(f"DEBUG: Creating agent for subtopic {i}: {subtopic}")
+        #     sub_agents.append(web_page_content_function(subtopic))
+
+        for i in range(session.state["subtopics"]["count"]):
+            print(f"DEBUG: Creating agent for subtopic {i}")
+            sub_agents.append(web_page_content_function(subtopics_list[i]))
+
 
         factory_agent.sub_agents = sub_agents
         
@@ -118,7 +133,10 @@ async def main_async():
             app_name=APP_NAME,
             session_service=session_service,
         )
+        print("DEBUG: Starting factory_agent execution (Parallel)...")
         
+        await asyncio.sleep(60)
+
         async for response in runner.run_async(
             user_id=USER_ID, 
             session_id=SESSION_ID, 
@@ -151,6 +169,14 @@ async def main_async():
         os._exit(0)
     except Exception as e:
         print(f"\n\nError occurred: {type(e).__name__}: {str(e)}")
+        import traceback
+        if hasattr(e, 'exceptions'):
+            print(f"DEBUG: ExceptionGroup details ({len(e.exceptions)} exceptions):")
+            for i, exc in enumerate(e.exceptions):
+                print(f"  --- Exception {i+1} ---")
+                traceback.print_exception(type(exc), exc, exc.__traceback__)
+        else:
+            traceback.print_exc()
         os._exit(1)
 
 
