@@ -14,9 +14,9 @@ Analyze the topic "{topic}" and generate a comprehensive list of subtopics that:
 ### SUBTOPIC GENERATION RULES
 
 **Quantity Guidelines:**
-- **Simple topics** (basic concepts, single-domain): Generate 5-6 subtopics
-- **Moderate topics** (multi-faceted, intermediate depth): Generate 7-8 subtopics
-- **Complex topics** (interdisciplinary, advanced, broad scope): Generate 9-10 subtopics
+- **Simple topics** (basic concepts, single-domain): Generate 3 subtopics
+- **Moderate topics** (multi-faceted, intermediate depth): Generate 3 subtopics
+- **Complex topics** (interdisciplinary, advanced, broad scope): Generate 3 subtopics
 
 **Quality Criteria for Each Subtopic:**
 - Must be **specific and focused** (not too broad or vague)
@@ -34,17 +34,19 @@ Analyze the topic "{topic}" and generate a comprehensive list of subtopics that:
 ---
 ### OUTPUT FORMAT   
 You must provide:
-1. A **list** of subtopics (format: "Subtopic Name, Another Subtopic, Third Subtopic")
+1. A **list** of subtopics (format: ['Subtopic Name', 'Another Subtopic', 'Third Subtopic'])
 2. The **total count** of subtopics generated
 
 **Example Output Structure:**
-[Fundamental Concepts and Definitions,
-Historical Development and Key Milestones,
-Core Principles and Mechanisms,
-Practical Applications and Use Cases,
-Advanced Techniques and Methodologies,
-Current Challenges and Limitations,
-Future Trends and Emerging Research]
+[
+'Fundamental Concepts and Definitions',
+'Historical Development and Key Milestones',
+'Core Principles and Mechanisms',
+'Practical Applications and Use Cases',
+'Advanced Techniques and Methodologies',
+'Current Challenges and Limitations',
+'Future Trends and Emerging Research'
+]
 
 Count: 7
 
@@ -53,4 +55,5 @@ Count: 7
 - Your output will be parsed programmatically, so maintain exact formatting
 - Each subtopic should be a clear, descriptive phrase (not a full sentence)
 - Ensure subtopics are ordered in a logical teaching sequence
+- Strictly adhere to the specified number of subtopics, and keep each subtopic separate—do not merge multiple subtopics into a single section.
 """
