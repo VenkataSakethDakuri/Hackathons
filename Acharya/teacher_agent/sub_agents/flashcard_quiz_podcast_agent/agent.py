@@ -1,22 +1,30 @@
 from google.adk.agents import ParallelAgent
 from pydantic import BaseModel, Field
-from ..web_page_agent.agent import web_page_agent
-from ..quiz_agent.agent import quiz_agent
-from ..flashcard_agent.agent import flashcard_agent
+from ..quiz_agent.agent import quiz_agent_function
+from ..flashcard_agent.agent import flashcard_agent_function
 # from .podcast_agent.agent import podcast_agent
 
+count = 0
 
+def flashcard_quiz_podcast_agent_function() -> ParallelAgent:      
+    global count
+    count += 1
 
-flashcard_quiz_podcast_agent = ParallelAgent(    
-    name="flashcard_quiz_podcast_agent",
-    sub_agents=[
-        flashcard_agent,
-        quiz_agent,
+    flashcard_agent = flashcard_agent_function()
+    quiz_agent = quiz_agent_function()
 
-        # podcast_agent
-    ],
-    description="The pipeline that creates flashcards, quizzes, and podcasts for a given topic parallelly"
-)
+    flashcard_quiz_podcast_agent = ParallelAgent(    
+        name=f"flashcard_quiz_podcast_agent_{count}",
+        sub_agents=[
+            flashcard_agent,
+            quiz_agent,
+
+            # podcast_agent
+        ],
+        description="The pipeline that creates flashcards, quizzes, and podcasts for a given topic parallelly"
+    )
+
+    return flashcard_quiz_podcast_agent
     
 
 
