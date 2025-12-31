@@ -1,1 +1,1 @@
-from .agent import web_page_agent
+from .agent import web_page_agent_function
