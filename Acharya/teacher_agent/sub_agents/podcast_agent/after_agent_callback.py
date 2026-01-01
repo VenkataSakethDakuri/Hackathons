@@ -3,6 +3,7 @@ from google import genai
 from google.genai import types
 import wave
 from google.adk.agents.callback_context import CallbackContext
+from pathlib import Path
 
 count = 0
 
@@ -58,8 +59,11 @@ async def after_agent_callback(callback_context: CallbackContext):
 
     data = response.candidates[0].content.parts[0].inline_data.data
 
+    podcast_dir = Path(r"C:\Users\DELL\OneDrive\Desktop\Project\Hackathons\Acharya\podcasts")
+    podcast_dir.mkdir(parents=True, exist_ok=True)  
+    
     file_name = f"out_{count}.wav"
-    wav_file_path=rf"C:\Users\DELL\OneDrive\Desktop\Project\Hackathons\Acharya\{file_name}"
-    wave_file(wav_file_path, data)
+    wav_file_path = podcast_dir / file_name
+    wave_file(str(wav_file_path), data)  # Convert Path to string
 
     return None

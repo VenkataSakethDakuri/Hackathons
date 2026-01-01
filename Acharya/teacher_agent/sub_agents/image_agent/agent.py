@@ -15,7 +15,7 @@ def image_agent_function() -> Agent:
     model="gemini-2.5-flash-lite",
     description="Generates images for a given topic",
     tools=[image_tool],
-    output_key="image_url",
+    output_key=f"image_url_{count}",
 )
 
     return image_agent

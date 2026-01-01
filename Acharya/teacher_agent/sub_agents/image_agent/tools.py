@@ -30,7 +30,7 @@ def download_image(image_url: str, save_dir: str = "images"):
 
 
 def image_tool(tool_context: ToolContext, topic: str):
-    """ Fetches image url for the required topic and downloads it"""
+    """ Fetches image url for the required topic and downloads it. Returns the image url."""
 
     params = {
     "engine": "google_images",

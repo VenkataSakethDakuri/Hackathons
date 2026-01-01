@@ -97,8 +97,8 @@ def web_page_content_function(subtopic: str) -> SequentialAgent:
         *   Bad: "{subtopic}" (Too generic)
         *   Good: "Labelled diagram of [Key Concept from content]", "Illustration of [Process described in content]", "Real world example of [Most Relevant Entity]"
         *   *Note: The image query does not need to strictly use the subtopic title; use whichever specific concept from the content is most visually relevant.*
-    3.  **Execute:** Call the `image_tool` with your specific query.
-    4.  **Output:** Ensure that the image URL is stored in the output key "image_url".
+    3.  **Execute:** Call the `image_tool` with your specific query to download the image and get the image URL.
+    4.  **Output:** Ensure that the image URL is stored in the output key "{flashcard_quiz_podcast_image_agent.sub_agents[3].output_key}".
 
     **Source Content:**
     {{{web_page_agent.output_key}}}
