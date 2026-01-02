@@ -10,6 +10,7 @@ Acharya is an advanced, multi-agent AI system designed to act as a comprehensive
     -   **Flashcards**: Key concepts extracted for retention.
     -   **Quizzes**: Multiple-choice questions to test understanding.
     -   **Podcasts**: Engaging conversations between two AI hosts (Alice & Bob).
+    -   **Images**: Relevant visual aids sourced and downloaded automatically.
 -   **Parallel Execution**: Utilizes parallel agents to generate content for multiple subtopics simultaneously, significantly reducing wait times.
 
 ## 📂 Folder Structure
@@ -47,10 +48,11 @@ The system follows a hierarchical and parallel workflow to maximize efficiency a
 For each subtopic, a specific sequence of agents is executed:
 
 1.  **Web Page Agent**: First, it researches and writes the core content.
-2.  **Parallel Content Generation**: Once the text is ready, three agents run in parallel, using the text as source material:
+2.  **Parallel Content Generation**: Once the text is ready, four agents run in parallel, using the text as source material:
     -   **Flashcard Agent**: Extracts facts.
     -   **Quiz Agent**: Creates questions.
     -   **Podcast Agent**: Scripts a discussion and converts it into a podcast.
+    -   **Image Agent**: Searches for and downloads relevant images.
 
 ### Workflow Diagram
 
@@ -121,14 +123,77 @@ flowchart TD
 
 ## 🚀 How to Run
 
-1.  Ensure you have the required environment variables set (Google API Key).
-2.  Run the main entry point:
+### Option 1: Command Line Interface
 
-```bash
-python main.py
-```
+1.  Ensure you have the required environment variables set in `.env` file:
+    ```bash
+    GOOGLE_API_KEY=your_api_key_here
+    SERPAPI_API_KEY=your_serpapi_key_here
+    ```
 
-3.  Enter your desired topic when prompted.
+2.  Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3.  Run the main entry point:
+    ```bash
+    python main.py
+    ```
+
+4.  Enter your desired topic when prompted.
+
+### Option 2: Web Interface (Recommended)
+
+For a better user experience with real-time progress updates and visual content display:
+
+#### Prerequisites
+- Python 3.10+
+- Node.js 16+ and npm
+
+#### Step 1: Start the Backend API Server
+
+1.  Open a terminal in the project root directory
+2.  Install Python dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3.  Start the FastAPI server:
+    ```bash
+    python api_server.py
+    ```
+
+    The API server will start on `http://localhost:8000`
+
+#### Step 2: Start the Frontend Development Server
+
+1.  Open a **new terminal** window
+2.  Navigate to the frontend directory:
+    ```bash
+    cd frontend
+    ```
+
+3.  Install Node.js dependencies (first time only):
+    ```bash
+    npm install
+    ```
+
+4.  Start the development server:
+    ```bash
+    npm run dev
+    ```
+
+    The frontend will start on `http://localhost:5174` (or `5173`)
+
+#### Step 3: Use the Application
+
+1.  Open your browser and navigate to `http://localhost:5174`
+2.  Enter a topic in the input field
+3.  Watch as content is generated progressively:
+    - Subtopics appear first
+    - Content fills in as each agent completes
+    - Progress updates shown in real-time
 
 ## Contributing
 Feel free to raise an issue or submit a pull request if you find any mistakes or have suggestions for improvement. Your contributions are welcome and appreciated!
