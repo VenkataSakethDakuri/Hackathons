@@ -62,9 +62,29 @@ async def lifespan(app: FastAPI):
     # Startup
     print("🚀 Acharya API Server starting...")
     yield
-    # Shutdown
+    # Shutdown - Clean up all sessions
     print("👋 Acharya API Server shutting down...")
-
+    print("🧹 Cleaning up sessions...")
+    
+    # Delete all ADK sessions
+    cleanup_count = 0
+    for session_id, session_data in list(session_store.items()):
+        try:
+            # Extract ADK session ID if it exists
+            adk_session_id = session_data.get("adk_session_id")
+            if adk_session_id:
+                await session_service.delete_session(
+                    app_name=APP_NAME,
+                    user_id="default_user",
+                    session_id=adk_session_id,
+                )
+                cleanup_count += 1
+        except Exception as e:
+            print(f"Error cleaning up session {session_id}: {e}")
+    
+    # Clear the session store
+    session_store.clear()
+    print(f"✅ Cleaned up {cleanup_count} ADK sessions")
 
 # Create FastAPI app
 app = FastAPI(
@@ -493,19 +513,36 @@ def parse_quiz(data):
             options = options_list[i]
             correct_answer = correct_answers[i] if i < len(correct_answers) else ""
             
-            # Find the correct index by matching the answer to options
+            # Extract correct index and explanation from format like "B) A cell - explanation..."
             correct_index = 0
-            for j, opt in enumerate(options):
-                # Check if the correct answer starts with or contains the option
-                if opt.lower() in correct_answer.lower() or correct_answer.lower().startswith(opt.lower()):
-                    correct_index = j
-                    break
+            explanation = correct_answer
+            
+            # Try to extract letter-based answer (A, B, C, D format)
+            if correct_answer:
+                # Match patterns like "A)", "B)", "C)", "D)" at the start
+                letter_match = correct_answer.strip()[:2].upper()
+                letter_map = {"A)": 0, "B)": 1, "C)": 2, "D)": 3, "A:": 0, "B:": 1, "C:": 2, "D:": 3}
+                
+                if letter_match in letter_map:
+                    correct_index = letter_map[letter_match]
+                    # Extract explanation after the dash
+                    if " - " in correct_answer:
+                        explanation = correct_answer.split(" - ", 1)[1].strip()
+                    else:
+                        # Remove the letter prefix for cleaner explanation
+                        explanation = correct_answer[2:].strip()
+                else:
+                    # Fallback: match option text in the answer
+                    for j, opt in enumerate(options):
+                        if opt.lower() in correct_answer.lower():
+                            correct_index = j
+                            break
             
             result.append({
                 "question": question,
                 "options": options,
                 "correctIndex": correct_index,
-                "explanation": correct_answer  # Include full explanation
+                "explanation": explanation
             })
     
     return result
@@ -622,4 +659,10 @@ async def get_image(filename: str):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(
+        app, 
+        host="0.0.0.0", 
+        port=8000,
+        timeout_keep_alive=1200,  # 20 minutes keep-alive timeout
+    )
+
