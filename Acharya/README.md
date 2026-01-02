@@ -100,7 +100,8 @@ flowchart TD
 | **Web Page Agent** | `LlmAgent` | The primary content creator. It writes the detailed article. |
 | **Flashcard Agent** | `LlmAgent` | Scans the article to create Q&A pairs for memorization. |
 | **Quiz Agent** | `LlmAgent` | Creates distinct multiple-choice questions to test comprehension. |
-| **Podcast Agent** | `LlmAgent` | Converts the article into a fun, 2-person dialogue script and then converts it into a podcast. |
+| **Podcast Agent** | `LlmAgent` | Converts the article into a fun, 2-person dialogue script and then converts it into a podcast using Gemini TTS. |
+| **Image Agent** | `LlmAgent` | Searches for relevant images using SerpAPI and downloads them locally for visual learning aids. |
 
 ## ⚙️ Key Implementation Details
 
@@ -111,8 +112,12 @@ flowchart TD
     -   The system doesn't rely on a fixed number of agents. It uses a **Factory Pattern** where agents are dynamically instantiated at runtime based on the number of subtopics generated.
     -   We use a `count` variable and loop index to strictly assign unique names (e.g., `web_page_content_function_agent_1`) to each dynamically created agent. This prevents state collisions in the parallel execution environment.
 
-3.  **Rate Limiting Strategy**:
-    -   To respect API quotas when spinning up 10+ concurrent agents, we intentionally introduce `asyncio.sleep(60)` delays between major pipeline stages. This ensures the system remains stable and does not trigger `429 Too Many Requests` errors.
+3.  **Retry Mechanism**:
+    -   **Podcast Agent**: Implements exponential backoff with 3 retry attempts for TTS generation to handle API disconnects and 503 errors.
+    -   **Image Agent**: Uses multi-source fallback (tries up to 5 different images) with 3 retries per source to ensure reliable image downloads.
+
+4.  **Rate Limiting Strategy**:
+    -   To respect API quotas when spinning up 10+ concurrent agents, we intentionally introduce `asyncio.sleep(30)` delays between major pipeline stages. This ensures the system remains stable and does not trigger `429 Too Many Requests` errors.
 
 ## 🚀 How to Run
 

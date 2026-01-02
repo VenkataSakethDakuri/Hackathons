@@ -94,11 +94,10 @@ async def main_async():
         ):
             if response.is_final_response():
                 final_response = response.content
+                print(".", end="", flush=True)
             
-            text_content = final_response.parts[0].text
-        
-        if final_response:
-            print(f"\n{text_content}\n")
+        # if final_response and final_response.parts:
+        #     print(f"\n{final_response.parts[0].text}\n")
         
         await asyncio.sleep(60)
 
@@ -146,11 +145,10 @@ async def main_async():
         ):
             if response.is_final_response():
                 final_response = response.content
-            
-            text_content = final_response.parts[0].text
+                # print(".", end="", flush=True) # visual feedback
         
-        if final_response:
-            print(f"\n{text_content}\n")    
+        # if final_response and final_response.parts:
+        #     print(f"\n{final_response.parts[0].text}\n")    
 
         print("Session completed. Cleaning up...")
 
@@ -173,22 +171,14 @@ async def main_async():
         for i in range(1, session.state["subtopics"]["count"] + 1):
             print(session.state[f"podcast_content_{i}"])
         print(100*"-")
+        # for i in range(1, session.state["subtopics"]["count"] + 1):
+        #     print(session.state[f"image_url_{i}"])
 
         await session_service.delete_session(
             app_name=APP_NAME,
             user_id=USER_ID,
             session_id=SESSION_ID,
         )   
-
-        # remove all cache 
-        root = "C:/Users/DELL/OneDrive/Desktop/Project/Hackathons/Acharya"
-        root = Path(root)
-
-        for d in root.rglob("__pycache__"):
-            if d.is_dir():
-                shutil.rmtree(d)   # deletes directory + contents
-
-        print("Removed all __pycache__ directories.")
         
         print("Session data deleted.")
 
