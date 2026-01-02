@@ -6,3 +6,5 @@ google-genai
 aiosqlite
 pydantic
 sqlalchemy
+fastapi
+uvicorn[standard]
