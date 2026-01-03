@@ -65,10 +65,10 @@ export async function getProgress(sessionId) {
  * @param {string} sessionId - The session ID
  * @param {function} onProgress - Callback for progress updates
  * @param {number} interval - Polling interval in ms (default: 3000)
- * @param {number} timeout - Max wait time in ms (default: 600000 = 10 minutes)
+ * @param {number} timeout - Max wait time in ms (default: 1200000 = 20 minutes)
  * @returns {Promise<{subtopics: string[], content: object[]}>}
  */
-export async function pollForCompletion(sessionId, onProgress = null, interval = 3000, timeout = 600000) {
+export async function pollForCompletion(sessionId, onProgress = null, interval = 3000, timeout = 1200000) {
     const startTime = Date.now();
 
     while (Date.now() - startTime < timeout) {

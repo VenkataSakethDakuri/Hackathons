@@ -1,6 +1,14 @@
 import ReactMarkdown from 'react-markdown';
 import './WebContent.css';
 
+// Process content to style inline citations like [1], [2], etc.
+const formatCitations = (text) => {
+    if (typeof text !== 'string') return text;
+
+    // Replace [1], [2], etc. with styled citation spans
+    return text.replace(/\[(\d+)\]/g, '<cite class="citation">[$1]</cite>');
+};
+
 const WebContent = ({ content, isLoading }) => {
     if (!content && !isLoading) {
         return (
@@ -30,17 +38,43 @@ const WebContent = ({ content, isLoading }) => {
         );
     }
 
+    // Check if content has a Sources section
+    const hasSourcesSection = content && (
+        content.includes('## Sources') ||
+        content.includes('### Sources') ||
+        content.includes('## References') ||
+        content.includes('### References')
+    );
+
     return (
         <div className="web-content">
-            <article className="web-article">
+            <article className={`web-article ${hasSourcesSection ? 'has-sources' : ''}`}>
                 <ReactMarkdown
                     components={{
                         // Custom styling for markdown elements
                         h1: ({ children }) => <h1 className="md-h1">{children}</h1>,
-                        h2: ({ children }) => <h2 className="md-h2">{children}</h2>,
-                        h3: ({ children }) => <h3 className="md-h3">{children}</h3>,
+                        h2: ({ children }) => {
+                            const text = children?.toString() || '';
+                            const isSourcesHeader = text.toLowerCase().includes('sources') || text.toLowerCase().includes('references');
+                            return <h2 className={`md-h2 ${isSourcesHeader ? 'sources-header' : ''}`}>{children}</h2>;
+                        },
+                        h3: ({ children }) => {
+                            const text = children?.toString() || '';
+                            const isSourcesHeader = text.toLowerCase().includes('sources') || text.toLowerCase().includes('references');
+                            return <h3 className={`md-h3 ${isSourcesHeader ? 'sources-header' : ''}`}>{children}</h3>;
+                        },
                         h4: ({ children }) => <h4 className="md-h4">{children}</h4>,
-                        p: ({ children }) => <p className="md-paragraph">{children}</p>,
+                        p: ({ children }) => (
+                            <p
+                                className="md-paragraph"
+                                dangerouslySetInnerHTML={{
+                                    __html: formatCitations(
+                                        typeof children === 'string' ? children :
+                                            Array.isArray(children) ? children.map(c => typeof c === 'string' ? c : '').join('') : ''
+                                    ) || ''
+                                }}
+                            />
+                        ),
                         ul: ({ children }) => <ul className="md-list">{children}</ul>,
                         ol: ({ children }) => <ol className="md-list ordered">{children}</ol>,
                         li: ({ children }) => <li className="md-list-item">{children}</li>,
@@ -51,7 +85,11 @@ const WebContent = ({ content, isLoading }) => {
                             inline
                                 ? <code className="md-inline-code">{children}</code>
                                 : <pre className="md-code-block"><code>{children}</code></pre>,
-                        a: ({ href, children }) => <a href={href} target="_blank" rel="noopener noreferrer" className="md-link">{children}</a>,
+                        a: ({ href, children }) => (
+                            <a href={href} target="_blank" rel="noopener noreferrer" className="md-link">
+                                {children}
+                            </a>
+                        ),
                     }}
                 >
                     {content}

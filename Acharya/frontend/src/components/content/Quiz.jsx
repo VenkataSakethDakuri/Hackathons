@@ -181,7 +181,12 @@ const Quiz = ({ questions }) => {
                 {isAnswered && (
                     <div className={`feedback ${isCorrect ? 'correct' : 'incorrect'}`}>
                         {isCorrect ? (
-                            <p>🎉 Correct! Well done!</p>
+                            <>
+                                <p>🎉 Correct! Well done!</p>
+                                {current.explanation && (
+                                    <p className="explanation">💡 {current.explanation}</p>
+                                )}
+                            </>
                         ) : (
                             <>
                                 <p>❌ Incorrect. The correct answer is: <strong>{current.options[current.correctIndex]}</strong></p>
