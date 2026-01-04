@@ -17,7 +17,7 @@ def web_page_agent_function() -> Agent:
 
     web_page_agent = Agent(
         name = f"web_page_agent_{count}",
-        model = "gemini-2.5-flash-lite", 
+        model = "gemini-2.5-flash", 
         description = "Generates web page content for a given topic",
         tools = [google_search],
         instruction = "You are a professional content writer. Write a detailed webpage about the user's topic.",

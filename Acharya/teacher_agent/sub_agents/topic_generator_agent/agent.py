@@ -12,8 +12,8 @@ class TopicGenerator(BaseModel):
     count: int = Field(
         ..., 
         description="The total number of subtopics generated (must match the number of items in the subtopics list)",
-        ge=3,  # Minimum 5 subtopics
-        le=3  # Maximum 10 subtopics
+        ge=2,  # Minimum 5 subtopics
+        le=2  # Maximum 10 subtopics
     )
 
 
