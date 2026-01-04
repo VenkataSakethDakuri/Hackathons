@@ -17,7 +17,7 @@ Acharya is an advanced, multi-agent AI system designed to act as a comprehensive
 
 Watch Acharya in action:
 
-https://github.com/user-attachments/assets/d7802d8f-d121-4117-bcc3-aeb5cdf7c941
+https://github.com/user-attachments/assets/a6dd5336-2cc3-4a84-9c0e-0a58d369373b
 
 > **Note**: The video demonstrates the complete workflow from topic input to content generation across all formats.
 
