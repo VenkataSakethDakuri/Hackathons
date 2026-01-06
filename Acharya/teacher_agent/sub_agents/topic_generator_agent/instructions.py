@@ -14,9 +14,9 @@ Analyze the topic "{topic}" and generate a comprehensive list of subtopics that:
 ### SUBTOPIC GENERATION RULES
 
 **Quantity Guidelines:**
-- **Simple topics** (basic concepts, single-domain): Generate 2 subtopics
-- **Moderate topics** (multi-faceted, intermediate depth): Generate 2 subtopics
-- **Complex topics** (interdisciplinary, advanced, broad scope): Generate 2 subtopics
+- **Simple topics** (basic concepts, single-domain): Generate 5-6 subtopics
+- **Moderate topics** (multi-faceted, intermediate depth): Generate 7-8 subtopics
+- **Complex topics** (interdisciplinary, advanced, broad scope): Generate 9-10 subtopics
 
 **Quality Criteria for Each Subtopic:**
 - Must be **specific and focused** (not too broad or vague)
