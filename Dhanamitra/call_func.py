@@ -25,13 +25,13 @@ def make_call(customer_number: str, customer_name: str, customer_email: str, ass
         "name": "Loan recovery call",
         "customers": [
             {
-                "number": {customer_number},
-                "name": {customer_name},
-                "email": {customer_email}
+                "number": customer_number,
+                "name": customer_name,
+                "email": customer_email
             }
         ],
 
-        "assistantId": {assistant_id},
+        "assistantId": assistant_id,
         "schedulePlan": {
             "earliestAt": timestamp_to_ISO(next_call_time),
             "latestAt": timestamp_to_ISO(next_call_time)
@@ -39,8 +39,8 @@ def make_call(customer_number: str, customer_name: str, customer_email: str, ass
         "phoneNumber": {
 
             "name": "Caller Number",
-            "assistantId": {assistant_id},
-            "phoneNumberId": {phone_number_id}
+            "assistantId": assistant_id,
+            "phoneNumberId": phone_number_id
         }
     }
 

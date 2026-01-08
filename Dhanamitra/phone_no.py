@@ -5,11 +5,11 @@ import os
 load_dotenv()
 
 def create_phone_number(assistant_id: str):
-    url = "https://api.vapi.ai/phone-number",
+    url = "https://api.vapi.ai/phone-number"
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {os.getenv('VAPI_API_KEY')}"
-    },
+    }
 
     payload = {
         
@@ -22,7 +22,7 @@ def create_phone_number(assistant_id: str):
             "twilioAuthToken": os.getenv('TWILIO_AUTH_TOKEN'),
             "twilioApiSecret": os.getenv('TWILIO_API_SECRET'),
             "twilioApiKey": os.getenv('TWILIO_API_KEY'),
-            "assistantId": {assistant_id}
+            "assistantId": assistant_id
         }
     }
 
