@@ -41,6 +41,10 @@ def make_call(customer_number: str, customer_name: str, customer_email: str, ass
             "name": "Caller Number",
             "assistantId": assistant_id,
             "phoneNumberId": phone_number_id
+        },
+
+        "assistantOverrides": {
+            "firstMessage": "Hello! am I speaking to {customer_name}?"
         }
     }
 

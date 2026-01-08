@@ -5,7 +5,7 @@ import os
 load_dotenv()
 
 
-def create_voice_agent(first_name: str, tool_ids: list):
+def create_voice_agent(tool_ids: list):
 
     url = "https://api.vapi.ai/assistant"
 
@@ -30,7 +30,8 @@ def create_voice_agent(first_name: str, tool_ids: list):
 
                 {
                     "role": "system",
-                    "content":
+                    "content": "You are a loan recovery agent, your task is to recover the loan amount from the customer."
+
                 }
                 
             ],
@@ -48,7 +49,6 @@ def create_voice_agent(first_name: str, tool_ids: list):
             "model": "nova-2-phonecall",
             "language": "en-IN"
         },
-        "firstMessage": f"Hello! am I speaking to {first_name}?",
         "firstMessageInterruptionsEnabled": True,
         "voicemailDetection": {
 
