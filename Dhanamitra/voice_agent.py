@@ -8,6 +8,7 @@ load_dotenv()
 def create_voice_agent(tool_ids: list):
 
     url = "https://api.vapi.ai/assistant"
+    server_url = os.getenv('NGROK_SERVER_URL')
 
     headers = {
         "Content-Type": "application/json",
@@ -72,6 +73,32 @@ def create_voice_agent(tool_ids: list):
     ],
         "voicemailMessage": "Hey! I am Dhanamitra, I am here to help you with your loan recovery, I will call you back at the earliest.",
         "endCallMessage": "Thank you for your time, have a great day!",
+        "server": {
+
+            "url": f"{server_url}/vapi-webhook"
+        },
+
+        "analysisPlan": {
+
+            "structuredDataPlan": {
+                "enabled": True,
+
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "call_outcome": {
+                            "type": "string",
+                            "enum": ["PAYMENT_COMPLETED", "CALLBACK_REQUESTED", "PROMISED_TO_PAY", "VOICEMAIL", "NO_ANSWER", "BUSY", "FAILED", "WRONG_NUMBER"]
+                        },
+                        "customer_sentiment": {
+                            "type": "string",
+                            "enum": ["Positive", "Neutral", "Negative"]
+                        }
+                    },
+                    "required": ["call_outcome", "customer_sentiment"]
+                }
+            }
+        }
     }
 
     response = requests.post(url, headers=headers, json=payload)
