@@ -29,9 +29,8 @@ CREATE TABLE IF NOT EXISTS customers (
             due_date DATE,
             last_payment_date DATE,
             
-            call_status TEXT DEFAULT 'PENDING' CHECK (call_status IN ('PENDING', 'ONGOING', 'FAILED', 'RESOLVED', 'DO_NOT_CALL')),
+            call_status TEXT DEFAULT 'PENDING' CHECK (call_status IN ('PENDING', 'RESOLVED', 'DO_NOT_CALL')),
             next_call_scheduled_at TIMESTAMP,
-            retry_count INTEGER DEFAULT 0
             email TEXT UNIQUE
         )
 """
