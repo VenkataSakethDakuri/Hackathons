@@ -7,15 +7,12 @@ load_dotenv()
 def upload_file(file_path: str):
     url = "https://api.vapi.ai/file"
     headers = {
-        "Content-Type": "multipart/form-data",
         "Authorization": f"Bearer {os.getenv('VAPI_API_KEY')}"
     }
 
-    payload = {
-        "file": open(file_path, "rb")
-    }
-
-    response = requests.post(url, headers=headers, files=payload)
+    with open(file_path, "rb") as f:
+        payload = {"file": f}
+        response = requests.post(url, headers=headers, files=payload)
 
     if response.status_code == 201:
         print("File uploaded successfully")
