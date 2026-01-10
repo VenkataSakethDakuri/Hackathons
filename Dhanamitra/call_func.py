@@ -4,6 +4,7 @@ import psycopg2
 import os
 import pytz
 from datetime import datetime, timedelta
+from decimal import Decimal
 
 load_dotenv()
 
@@ -76,7 +77,7 @@ def make_call(customer_number: str, customer_name: str, customer_email: str, ass
                 "messages": [
                     {
                         "role": "system",
-                        "content": """
+                        "content": f"""
                         You are a loan recovery agent.
                         
                         Here is the history of previous calls with this customer:

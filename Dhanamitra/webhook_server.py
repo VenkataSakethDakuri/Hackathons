@@ -1,7 +1,11 @@
 from fastapi import FastAPI, Request    
 from dotenv import load_dotenv
 import os
+import psycopg2
 from call_func import make_call
+from datetime import datetime, timedelta
+from decimal import Decimal
+
 
 load_dotenv()
 
@@ -80,16 +84,17 @@ async def webhook(request: Request):
                 next_call_time = None
 
         # Get Customer ID
-        cursor.execute("SELECT customer_id FROM customers WHERE phone_number = %s", (phone_number,))
+        cursor.execute("SELECT customer_id, outstanding_balance, due_date FROM customers WHERE phone_number = %s", (phone_number,))
         result = cursor.fetchone()
-
-        outstanding_balance = Decimal(result['outstanding_balance'])
-        due_date = result['due_date']
 
         if result:
             customer_id = result[0]
+            outstanding_balance = Decimal(result[1])
+            due_date = result[2]
         else:
             customer_id = None
+            outstanding_balance = None
+            due_date = None
 
         log_query = """
                     INSERT INTO call_logs 

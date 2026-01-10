@@ -7,7 +7,7 @@ load_dotenv()
 def upload_file(file_path: str):
     url = "https://api.vapi.ai/file"
     headers = {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
         "Authorization": f"Bearer {os.getenv('VAPI_API_KEY')}"
     }
 
